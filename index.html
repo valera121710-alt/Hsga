@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Мой весёлый бот 😹</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .chat-box {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            height: 500px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .message {
+            margin: 10px 0;
+            padding: 10px 15px;
+            border-radius: 20px;
+            max-width: 80%;
+        }
+        .user-message {
+            background: #007bff;
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+        .bot-message {
+            background: #f1f1f1;
+            color: black;
+            border-bottom-left-radius: 5px;
+        }
+        .input-container {
+            display: flex;
+            gap: 10px;
+        }
+        input {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            outline: none;
+            font-size: 16px;
+        }
+        button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Весёлый Бот 😹</h1>
+            <p>Напиши что-нибудь, и я пошучу!</p>
+        </div>
+        
+        <div class="chat-box" id="chatBox">
+            <div class="message bot-message">
+                Привет! Я твой весёлый помощник! 🎉<br>
+                Напиши "шутка" или просто поздоровайся! 😊
+            </div>
+        </div>
+        
+        <div class="input-container">
+            <input type="text" id="userInput" placeholder="Введите сообщение...">
+            <button onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+
+    <script>
+        const jokes = [
+            "Почему программист всегда мокрый? Потому что он постоянно в Python! 🐍",
+            "Что сказал null другому null? Ничего, они оба упали! 💥",
+            "Почему бот пошел к психологу? У него были проблемы с токенизацией! 🧠",
+            "Какой кофе пьют программисты? Java! ☕",
+            "Почему JavaScript разработчик не мог найти работу? Потому что он не проходил type checking! 🤣",
+            "Что сказал один бит другому? До скорого встречи! 👋",
+            "Почему программист не любит природу? Слишком много багов! 🐛",
+            "Как программисты называют лифт? Метод для вертикального перемещения! 🏢"
+        ];
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const chatBox = document.getElementById('chatBox');
+            const message = input.value.trim();
+
+            if (!message) return;
+
+            // Добавляем сообщение пользователя
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user-message';
+            userMessage.textContent = message;
+            chatBox.appendChild(userMessage);
+
+            // Очищаем input
+            input.value = '';
+
+            // Ответ бота (с задержкой для реалистичности)
+            setTimeout(() => {
+                const botMessage = document.createElement('div');
+                botMessage.className = 'message bot-message';
+                
+                let response;
+                if (message.toLowerCase().includes('привет')) {
+                    response = "Привет-привет! Как настроение? 😄";
+                } else if (message.toLowerCase().includes('шутка')) {
+                    response = jokes[Math.floor(Math.random() * jokes.length)];
+                } else if (message.toLowerCase().includes('пока')) {
+                    response = "Пока! Возвращайся за новыми шутками! 👋";
+                } else {
+                    response = jokes[Math.floor(Math.random() * jokes.length)];
+                }
+
+                botMessage.textContent = response;
+                chatBox.appendChild(botMessage);
+                
+                // Прокручиваем вниз
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 500);
+        }
+
+        // Отправка по Enter
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>
